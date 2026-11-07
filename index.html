@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elijo Odontomar — Odontología Integral & Estética Dental</title>
+  
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              aqua: '#20cdd4',
+              aquaHover: '#18b0b6',
+              greenLight: '#f7f9e8',
+              greenBorder: '#e2ebb3',
+              dark: '#111827',
+              darkHover: '#000000',
+              gray: '#6b7280',
+            }
+          },
+          boxShadow: {
+            'soft': '0 12px 30px -4px rgba(0, 0, 0, 0.04)',
+            'card': '0 2px 10px rgba(0, 0, 0, 0.03)',
+            'elevated': '0 20px 40px -10px rgba(0, 0, 0, 0.12)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background-color: #ffffff;
+      color: #111827;
+      overflow-x: hidden;
+    }
+
+    .concentric-arcs {
+      background-image: radial-gradient(circle at 75% 20%, transparent 180px, rgba(255, 255, 255, 0.45) 181px, rgba(255, 255, 255, 0.45) 182px, transparent 183px, transparent 270px, rgba(255, 255, 255, 0.35) 271px, rgba(255, 255, 255, 0.35) 272px, transparent 273px, transparent 380px, rgba(255, 255, 255, 0.25) 381px, rgba(255, 255, 255, 0.25) 382px, transparent 383px);
+    }
+
+    .card-gradient {
+      background: linear-gradient(145deg, #fdfafc 0%, #faedf5 100%);
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Header: transparent at top, glass when scrolled */
+    .header-scrolled {
+      background: rgba(255, 255, 255, 0.92) !important;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom-color: rgba(229, 231, 235, 0.8) !important;
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    /* ══ Image compare (.cmp) ════════════════════════════════════════ */
+    .cmp {
+      position: relative;
+      overflow: hidden;
+      touch-action: none;
+      cursor: ew-resize;
+      outline: none;
+      user-select: none;
+      -webkit-user-select: none;
+      background: #222;
+    }
+
+    .cmp:focus-visible { box-shadow: 0 0 0 2px var(--signal, #20cdd4); }
+
+    .cmp-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      -webkit-user-drag: none;
+    }
+
+    /* no drift now: two separate photographs have to stay exactly in
+       register, or the x-ray stops lining up with the picture */
+    .cmp-before {
+      position: absolute;
+      inset: 0;
+      will-change: clip-path;
+    }
+
+    .cmp-tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 5px 12px;
+      border-radius: 99px;
+      background: rgba(23, 24, 26, 0.55);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .cmp-tag.cmp-right {
+      left: auto;
+      right: 14px;
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid rgba(173, 188, 47, 0.4);
+    }
+
+    /* the line is drawn, so it can bend: a 2px white curve with a
+       soft glow, over the whole block */
+    .cmp-line {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+      filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
+      z-index: 20;
+    }
+
+    .cmp-line path {
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 2;
+    }
+
+    .cmp-grip {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      pointer-events: none;
+      z-index: 30;
+    }
+
+    .cmp-knob {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 38px;
+      height: 38px;
+      translate: -50% -50%;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #17181a;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.35);
+      transition: scale 260ms cubic-bezier(0.3, 1.5, 0.4, 1);
+      cursor: ew-resize;
+    }
+
+    .cmp:hover .cmp-knob { scale: 1.08; }
+
+    .cmp[data-held] .cmp-knob { scale: 0.9; }
+
+    /* Floating tooth sticker animations */
+    @keyframes toothFloat {
+      0%, 100% { transform: translateY(0px) rotate(14deg); }
+      50% { transform: translateY(-10px) rotate(8deg); }
+    }
+    .float-tooth {
+      animation: toothFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes toothFloatReverse {
+      0%, 100% { transform: translateY(0px) rotate(-14deg); }
+      50% { transform: translateY(-8px) rotate(-8deg); }
+    }
+    .float-tooth-slow {
+      animation: toothFloatReverse 5s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="selection:bg-neutral-900 selection:text-white">
+
+  <!-- ==================== TOP BAR ==================== -->
+  <header id="mainHeader" class="fixed top-0 left-0 right-0 z-50 w-full bg-transparent border-b border-transparent transition-all duration-300 ease-in-out">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 h-20 flex items-center justify-between">
+      
+      <!-- Logo with brand icon -->
+      <a href="#" class="flex items-center gap-2.5 sm:gap-3.5 group">
+        <img src="logo.png" alt="Elijo Odontomar Logo" class="w-10 sm:w-11 h-10 sm:h-11 object-contain group-hover:scale-105 transition-transform">
+        <div class="leading-tight">
+          <div class="flex items-baseline gap-1.5">
+            <span class="font-serif italic text-base sm:text-lg text-neutral-400">Elijo</span>
+            <span class="text-lg sm:text-[22px] font-black tracking-wider text-neutral-900">ODONTOMAR</span>
+          </div>
+          <span class="text-[9px] sm:text-[10px] font-semibold text-neutral-400 tracking-wider uppercase block">Odontología Integral & Estética</span>
+        </div>
+      </a>
+
+      <!-- Navigation links -->
+      <nav class="hidden md:flex items-center space-x-10 text-[13px] font-semibold tracking-wider text-neutral-600">
+        <a href="#hero" class="hover:text-black transition-colors">INICIO</a>
+        <a href="#treatments" class="hover:text-black transition-colors">TRATAMIENTOS</a>
+        <a href="#results" class="hover:text-black transition-colors">RESULTADOS</a>
+        <a href="#faq" class="hover:text-black transition-colors">FAQ</a>
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Mobile hamburger menu -->
+        <button onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="md:hidden p-2 text-neutral-700 hover:text-black">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <button onclick="openBookingModal()" class="inline-flex items-center gap-1.5 sm:gap-2 bg-neutral-900 hover:bg-black text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs font-bold tracking-wider transition-all shadow-sm active:scale-95">
+          <svg class="w-3 sm:w-3.5 h-3 sm:h-3.5 fill-current text-white" viewBox="0 0 24 24">
+            <path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24c1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+          <span class="hidden sm:inline">CONSULTAR YA</span>
+          <span class="sm:hidden">CONSULTAR</span>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Navigation Dropdown -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-neutral-100 bg-white/95 backdrop-blur-md">
+      <nav class="flex flex-col px-6 py-4 space-y-3 text-sm font-semibold text-neutral-700">
+        <a href="#hero" class="hover:text-[#20cdd4] transition-colors" onclick="document.getElementById('mobileMenu').classList.add('hidden')">INICIO</a>
+        <a href="#treatments" class="hover:text-[#20cdd4] transition-colors" onclick="document.getElementById('mobileMenu').classList.add('hidden')">TRATAMIENTOS</a>
+        <a href="#results" class="hover:text-[#20cdd4] transition-colors" onclick="document.getElementById('mobileMenu').classList.add('hidden')">RESULTADOS</a>
+        <a href="#faq" class="hover:text-[#20cdd4] transition-colors" onclick="document.getElementById('mobileMenu').classList.add('hidden')">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION (FULL BLEED LUXURY EDITORIAL) ==================== -->
+  <main id="hero" class="relative w-full overflow-hidden min-h-[620px] sm:min-h-[700px] lg:min-h-[760px] flex items-center bg-white">
+    
+    <!-- Hero Background Macro Image Layer (Seamless background across Mobile, Tablet & PC) -->
+    <div class="absolute top-0 right-0 h-[440px] sm:h-full w-full sm:w-[50%] md:w-[52%] lg:w-[56%] xl:w-[60%] pointer-events-none select-none z-0 overflow-hidden block">
+      <picture class="w-full h-full block">
+        <source srcset="hero_smile_macro.webp" type="image/webp">
+        <img src="hero_smile_macro.jpg" 
+             alt="Diseño de Sonrisa - Elijo Odontomar" 
+             class="w-full h-full object-cover object-[84%_25%] sm:object-right select-none">
+      </picture>
+      
+      <!-- Seamless fade into pure white canvas on the left -->
+      <div class="absolute inset-y-0 left-0 w-44 sm:w-48 md:w-56 lg:w-72 xl:w-80 bg-gradient-to-r from-white via-white/85 sm:via-white/80 to-transparent pointer-events-none"></div>
+      
+      <!-- Gentle fade on bottom edge to blend seamlessly -->
+      <div class="absolute inset-x-0 bottom-0 h-28 sm:h-28 bg-gradient-to-t from-white via-white/90 sm:via-white/80 to-transparent pointer-events-none"></div>
+    </div>
+
+    <!-- Foreground Content Layer -->
+    <div class="relative z-10 w-full max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-16 pt-24 sm:pt-28 pb-14 sm:pb-16 lg:pb-20">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
+        
+        <!-- Left Column: Content (takes full on mobile, 7 cols on tablet/PC) -->
+        <section class="md:col-span-7 xl:col-span-6 flex flex-col justify-between py-2 sm:py-4">
+          <div class="space-y-5 sm:space-y-6 lg:space-y-7">
+            
+            <!-- Social Proof -->
+            <div class="flex items-center gap-3.5">
+              <div class="flex -space-x-2 overflow-hidden">
+                <img alt="Paciente Elijo Odontomar" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80">
+                <img alt="Paciente Elijo Odontomar" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80">
+                <img alt="Paciente Elijo Odontomar" class="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80">
+              </div>
+              <div class="leading-tight">
+                <span class="block text-sm font-bold text-neutral-900 leading-none">5k+</span>
+                <span class="text-[11px] font-medium text-neutral-500">Sonrisas Radiantes</span>
+              </div>
+            </div>
+
+            <!-- Main Headline -->
+            <h1 class="text-3xl sm:text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] font-extrabold text-neutral-900 tracking-tight pt-1" style="line-height: 1.14;">
+              Odontología Integral<br>
+              & Sonrisas que <span class="text-[#20cdd4]">Inspiran</span>.
+            </h1>
+
+            <!-- Simple, punchy CTA & Subtitle -->
+            <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-6">
+              <button onclick="openBookingModal()" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-neutral-900 hover:bg-black active:scale-95 text-white font-bold text-xs sm:text-[13px] px-7 py-3.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 tracking-wider">
+                <span>AGENDAR CONSULTA</span>
+                <svg class="w-3.5 h-3.5 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+              </button>
+              <p class="text-xs sm:text-[13px] leading-relaxed text-neutral-500 max-w-[260px]">
+                En Elijo Odontomar combinamos salud bucal integral y estética de vanguardia para brindarte una sonrisa armónica y radiante.
+              </p>
+            </div>
+          </div>
+
+
+          <!-- 2 Simple Feature Cards -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 pt-4 sm:pt-8 md:pt-10 max-w-[580px]">
+            <div class="card-gradient rounded-3xl p-5 border border-white/80 shadow-soft flex flex-col justify-between h-[150px]">
+              <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
+                <svg class="w-4 h-4 text-neutral-900 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2C9.5 2 7.7 3.2 7 5.2C6.1 7.8 5.7 10 5.4 12.3c-.5 4 1 6.5 2.1 6.7.7.1 1.4-.4 2-1.3.6-.9 1.4-2.7 2.5-2.7s1.9 1.8 2.5 2.7c.6.9 1.3 1.4 2 1.3 1.1-.2 2.6-2.7 2.1-6.7-.3-2.3-.7-4.5-1.6-7.1C16.3 3.2 14.5 2 12 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-neutral-900 text-sm mb-0.5">Diseño de Sonrisa</h3>
+                <p class="text-[11px] leading-normal text-neutral-500">
+                  Planificación digital personalizada a la armonía de tu rostro.
+                </p>
+              </div>
+            </div>
+
+            <div class="card-gradient rounded-3xl p-5 border border-white/80 shadow-soft flex flex-col justify-between h-[150px]">
+              <div class="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
+                <svg class="w-4 h-4 text-neutral-900 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 2L13.8 8.2L20 10L13.8 11.8L12 18L10.2 11.8L4 10L10.2 8.2L12 2Z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-neutral-900 text-sm mb-0.5">Estética Dental</h3>
+                <p class="text-[11px] leading-normal text-neutral-500">
+                  Carillas, blanqueamiento dental y tratamientos estéticos.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Right Column: Open canvas where the giant background smile shines through unobstructed -->
+        <section class="relative hidden md:flex md:col-span-5 xl:col-span-6 h-full min-h-[300px] sm:min-h-[400px] lg:min-h-[560px] pointer-events-none select-none items-center justify-end">
+          
+          <!-- Elegant Sparkle Stars (✦) positioned gently in the transition zone, not over the face -->
+          <div class="absolute top-12 left-0 sm:left-4 z-20 pointer-events-none select-none text-neutral-300 animate-pulse">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0L14.4 9.6L24 12L14.4 14.4L12 24L9.6 14.4L0 12L9.6 9.6L12 0Z"/></svg>
+          </div>
+          <div class="absolute bottom-16 left-6 sm:left-12 z-20 pointer-events-none select-none text-neutral-300/80 animate-pulse">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 0L14.4 9.6L24 12L14.4 14.4L12 24L9.6 14.4L0 12L9.6 9.6L12 0Z"/></svg>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== TREATMENTS (MODERN SNAP SLIDER) ==================== -->
+  <section id="treatments" class="py-16 sm:py-24 border-t border-neutral-100">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+      
+      <div class="text-center max-w-md mx-auto mb-14">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-neutral-900 tracking-tight">
+          Nuestros Tratamientos
+        </h2>
+        <p class="text-neutral-500 text-xs sm:text-sm mt-2">
+          Salud bucal integral y estética dental de vanguardia.
+        </p>
+      </div>
+
+      <!-- 10-Card Full-Size Slider Track -->
+      <div id="treatmentsTrack" class="flex gap-5 sm:gap-6 overflow-x-auto pb-4 pt-2 -mx-6 px-6 sm:-mx-10 sm:px-10 lg:-mx-16 lg:px-16 scroll-smooth snap-x snap-mandatory no-scrollbar">
+        
+        <!-- 1. Caries -->
+        <div class="w-[82vw] sm:w-[340px] lg:w-[380px] shrink-0 snap-start group bg-neutral-50/70 hover:bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/60 hover:border-neutral-900 hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-full h-48 rounded-2xl overflow-hidden mb-5 bg-neutral-100">
+              <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=800&q=80" alt="Tratamiento de Caries" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <span class="text-[11px] font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full tracking-wider">RESTAURACIÓN</span>
+            <h3 class="text-lg font-bold text-neutral-900 mt-3">Caries</h3>
+            <p class="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+              Eliminación de caries y restauración dental con resinas de alta estética para devolver la salud y forma natural de tus dientes.
+            </p>
+          </div>
+          <button onclick="openBookingModal('Caries')" class="mt-6 text-xs font-bold text-neutral-900 hover:text-[#9bb024] flex items-center gap-1.5 group-hover:translate-x-0.5 transition-transform">
+            <span>Consultar</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- 2. Profilaxis -->
+        <div class="w-[82vw] sm:w-[340px] lg:w-[380px] shrink-0 snap-start group bg-neutral-50/70 hover:bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/60 hover:border-neutral-900 hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-full h-48 rounded-2xl overflow-hidden mb-5 bg-neutral-100">
+              <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=800&q=80" alt="Profilaxis y Limpieza Dental" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <span class="text-[11px] font-bold text-neutral-900 bg-neutral-100 px-3 py-1 rounded-full tracking-wider">PREVENCIÓN</span>
+            <h3 class="text-lg font-bold text-neutral-900 mt-3">Profilaxis</h3>
+            <p class="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+              Limpieza dental profesional profunda para eliminar placa, sarro y manchas, manteniendo tus dientes sanos y brillantes.
+            </p>
+          </div>
+          <button onclick="openBookingModal('Profilaxis')" class="mt-6 text-xs font-bold text-neutral-900 hover:text-[#9bb024] flex items-center gap-1.5 group-hover:translate-x-0.5 transition-transform">
+            <span>Agendar</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- 3. Periodoncia -->
+        <div class="w-[82vw] sm:w-[340px] lg:w-[380px] shrink-0 snap-start group bg-neutral-50/70 hover:bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/60 hover:border-neutral-900 hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-full h-48 rounded-2xl overflow-hidden mb-5 bg-neutral-100">
+              <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=800&q=80" alt="Periodoncia y Cuidado de Encías" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <span class="text-[11px] font-bold text-teal-600 bg-teal-50 px-3 py-1 rounded-full tracking-wider">PERIODONCIA</span>
+            <h3 class="text-lg font-bold text-neutral-900 mt-3">Periodoncia</h3>
+            <p class="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+              Tratamiento de encías inflamadas, sangrado y retracción gingival para asegurar la firmeza y soporte de tus dientes.
+            </p>
+          </div>
+          <button onclick="openBookingModal('Periodoncia')" class="mt-6 text-xs font-bold text-neutral-900 hover:text-[#9bb024] flex items-center gap-1.5 group-hover:translate-x-0.5 transition-transform">
+            <span>Consultar</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- 4. Prótesis -->
+        <div class="w-[82vw] sm:w-[340px] lg:w-[380px] shrink-0 snap-start group bg-neutral-50/70 hover:bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/60 hover:border-neutral-900 hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-full h-48 rounded-2xl overflow-hidden mb-5 bg-neutral-100">
+              <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=800&q=80" alt="Prótesis Dentales" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <span class="text-[11px] font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full tracking-wider">REHABILITACIÓN</span>
+            <h3 class="text-lg font-bold text-neutral-900 mt-3">Prótesis</h3>
+            <p class="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+              Prótesis fijas y removibles de alta calidad para recuperar tu capacidad masticatoria y la estética de tu sonrisa.
+            </p>
+          </div>
+          <button onclick="openBookingModal('Prótesis')" class="mt-6 text-xs font-bold text-neutral-900 hover:text-[#9bb024] flex items-center gap-1.5 group-hover:translate-x-0.5 transition-transform">
+            <span>Cotizar</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- 5. Cirugías -->
+        <div class="w-[82vw] sm:w-[340px] lg:w-[380px] shrink-0 snap-start group bg-neutral-50/70 hover:bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/60 hover:border-neutral-900 hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-full h-48 rounded-2xl overflow-hidden mb-5 bg-neutral-100">
+              <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80" alt="Cirugías Dentales" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <span class="text-[11px] font-bold text-rose-600 bg-rose-50 px-3 py-1 rounded-full tracking-wider">CIRUGÍA</span>
+            <h3 class="text-lg font-bold text-neutral-900 mt-3">Cirugías</h3>
+            <p class="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+              Extracciones, cordales y procedimientos quirúrgicos seguros con anestesia local para una recuperación cómoda y efectiva.
+            </p>
+          </div>
+          <button onclick="openBookingModal('Cirugías')" class="mt-6 text-xs font-bold text-neutral-900 hover:text-[#9bb024] flex items-center gap-1.5 group-hover:translate-x-0.5 transition-transform">
+            <span>Consultar</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- 6. Carillas -->
+        <div class="w-[82vw] sm:w-[340px] lg:w-[380px] shrink-0 snap-start group bg-neutral-50/70 hover:bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/60 hover:border-neutral-900 hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-full h-48 rounded-2xl overflow-hidden mb-5 bg-neutral-100">
+              <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=800&q=80" alt="Carillas Dentales" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <span class="text-[11px] font-bold text-neutral-900 bg-neutral-100 px-3 py-1 rounded-full tracking-wider">ESTÉTICA</span>
+            <h3 class="text-lg font-bold text-neutral-900 mt-3">Carillas</h3>
+            <p class="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+              Láminas ultrafinas de porcelana o resina para corregir color, forma y espacio, logrando una sonrisa armónica y radiante.
+            </p>
+          </div>
+          <button onclick="openBookingModal('Carillas')" class="mt-6 text-xs font-bold text-neutral-900 hover:text-[#9bb024] flex items-center gap-1.5 group-hover:translate-x-0.5 transition-transform">
+            <span>Cotizar</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- 7. Coronas -->
+        <div class="w-[82vw] sm:w-[340px] lg:w-[380px] shrink-0 snap-start group bg-neutral-50/70 hover:bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/60 hover:border-neutral-900 hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-full h-48 rounded-2xl overflow-hidden mb-5 bg-neutral-100">
+              <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="Coronas Dentales" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <span class="text-[11px] font-bold text-pink-600 bg-neutral-100 px-3 py-1 rounded-full tracking-wider">RESTAURACIÓN</span>
+            <h3 class="text-lg font-bold text-neutral-900 mt-3">Coronas</h3>
+            <p class="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+              Coronas de porcelana que protegen y restauran dientes debilitados con un acabado natural y duradero.
+            </p>
+          </div>
+          <button onclick="openBookingModal('Coronas')" class="mt-6 text-xs font-bold text-neutral-900 hover:text-[#9bb024] flex items-center gap-1.5 group-hover:translate-x-0.5 transition-transform">
+            <span>Cotizar</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- 8. Blanqueamiento -->
+        <div class="w-[82vw] sm:w-[340px] lg:w-[380px] shrink-0 snap-start group bg-neutral-50/70 hover:bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/60 hover:border-neutral-900 hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-full h-48 rounded-2xl overflow-hidden mb-5 bg-neutral-100">
+              <img src="https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=800&q=80" alt="Blanqueamiento Dental" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <span class="text-[11px] font-bold text-fuchsia-600 bg-fuchsia-50 px-3 py-1 rounded-full tracking-wider">ESTÉTICA</span>
+            <h3 class="text-lg font-bold text-neutral-900 mt-3">Blanqueamiento</h3>
+            <p class="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+              Aclaramiento dental profesional con tecnología LED para dientes visiblemente más blancos en una sola sesión.
+            </p>
+          </div>
+          <button onclick="openBookingModal('Blanqueamiento')" class="mt-6 text-xs font-bold text-neutral-900 hover:text-[#9bb024] flex items-center gap-1.5 group-hover:translate-x-0.5 transition-transform">
+            <span>Consultar</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- 9. Retenedores -->
+        <div class="w-[82vw] sm:w-[340px] lg:w-[380px] shrink-0 snap-start group bg-neutral-50/70 hover:bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/60 hover:border-neutral-900 hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-full h-48 rounded-2xl overflow-hidden mb-5 bg-neutral-100">
+              <img src="https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?auto=format&fit=crop&w=800&q=80" alt="Retenedores Dentales" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <span class="text-[11px] font-bold text-violet-600 bg-violet-50 px-3 py-1 rounded-full tracking-wider">RETENCIÓN</span>
+            <h3 class="text-lg font-bold text-neutral-900 mt-3">Retenedores</h3>
+            <p class="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+              Retenedores fijos y removibles para mantener la posición ideal y estabilidad de tus dientes.
+            </p>
+          </div>
+          <button onclick="openBookingModal('Retenedores')" class="mt-6 text-xs font-bold text-neutral-900 hover:text-[#9bb024] flex items-center gap-1.5 group-hover:translate-x-0.5 transition-transform">
+            <span>Consultar</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <!-- 10. Quita Hábitos -->
+        <div class="w-[82vw] sm:w-[340px] lg:w-[380px] shrink-0 snap-start group bg-neutral-50/70 hover:bg-white rounded-3xl p-5 sm:p-6 border border-neutral-200/60 hover:border-neutral-900 hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
+          <div>
+            <div class="w-full h-48 rounded-2xl overflow-hidden mb-5 bg-neutral-100">
+              <img src="https://images.unsplash.com/photo-1588776813677-77aaf5595b83?auto=format&fit=crop&w=800&q=80" alt="Aparatos Quita Hábitos" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <span class="text-[11px] font-bold text-orange-600 bg-orange-50 px-3 py-1 rounded-full tracking-wider">INFANTIL</span>
+            <h3 class="text-lg font-bold text-neutral-900 mt-3">Quita Hábitos</h3>
+            <p class="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+              Aparatología especializada para corregir hábitos como succión digital y deglución atípica en niños de forma segura.
+            </p>
+          </div>
+          <button onclick="openBookingModal('Quita Hábitos')" class="mt-6 text-xs font-bold text-neutral-900 hover:text-[#9bb024] flex items-center gap-1.5 group-hover:translate-x-0.5 transition-transform">
+            <span>Consultar</span>
+            <span>→</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Navigation Controls Below Slider (Centered) -->
+      <div class="flex items-center justify-center gap-3 mt-8 pt-2">
+        <button onclick="slideTreatments(-1)" id="btnTreatmentsPrev" class="w-12 h-12 rounded-full border border-neutral-200 hover:border-neutral-900 bg-white hover:bg-neutral-900 hover:text-white active:scale-95 flex items-center justify-center text-neutral-700 shadow-sm transition-all duration-200" aria-label="Tratamientos anteriores">
+          <svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button onclick="slideTreatments(1)" id="btnTreatmentsNext" class="w-12 h-12 rounded-full border border-neutral-200 hover:border-neutral-900 bg-white hover:bg-neutral-900 hover:text-white active:scale-95 flex items-center justify-center text-neutral-700 shadow-sm transition-all duration-200" aria-label="Siguientes tratamientos">
+          <svg class="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BEFORE & AFTER SLIDER ==================== -->
+  <section id="results" class="py-16 sm:py-20 bg-neutral-900 text-white">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+      
+      <div class="text-center max-w-md mx-auto mb-10">
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Resultados Reales</h2>
+      </div>
+
+      <div class="max-w-3xl mx-auto">
+        <div class="cmp rounded-2xl sm:rounded-3xl aspect-[4/3] sm:aspect-[16/9] shadow-2xl border border-white/10" id="orthoCompare" tabindex="0" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="Comparación antes y después de tratamiento dental y estético">
+          <!-- After Image (background) -->
+          <img src="after.jpg" class="cmp-img" alt="Sonrisa después del tratamiento dental y estético">
+          <span class="cmp-tag cmp-right">Después</span>
+
+          <!-- Before Image (clipped dynamically) -->
+          <div class="cmp-before" id="cmpBefore" style="clip-path: inset(0 50% 0 0);">
+            <img src="before.jpg" class="cmp-img" alt="Dientes antes del tratamiento dental">
+            <span class="cmp-tag">Antes</span>
+          </div>
+
+          <!-- The line is drawn, so it can bend: 2px white curve with soft glow -->
+          <svg class="cmp-line" id="cmpSvg">
+            <path id="cmpPath" d="M 0 0 L 0 0"></path>
+          </svg>
+
+          <!-- Grip knob -->
+          <div class="cmp-grip" id="cmpGrip" style="left: 50%;">
+            <div class="cmp-knob">
+              <svg class="w-4 h-4 text-neutral-800 stroke-[2.2]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M8 7L3 12L8 17M16 7L21 12L16 17" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-wrap justify-center gap-4 sm:gap-8 text-center text-xs text-neutral-400">
+          <div><span class="text-white font-bold">100%</span> • Personalizado</div>
+          <div><span class="text-white font-bold">Atención</span> • Cómoda & Segura</div>
+          <div><span class="text-white font-bold">Resultados</span> • Calidad & Estética</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 3 STEPS ==================== -->
+  <section class="py-16 sm:py-24 border-b border-neutral-100">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+      
+      <div class="text-center max-w-md mx-auto mb-14">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-neutral-900 tracking-tight">¿Cómo Funciona?</h2>
+        <p class="text-neutral-500 text-xs sm:text-sm mt-2">Tres pasos hacia tu sonrisa perfecta.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+        <!-- Connecting line (desktop only) -->
+        <div class="hidden md:block absolute top-10 left-[16.6%] right-[16.6%] h-px border-t-2 border-dashed border-neutral-200 pointer-events-none"></div>
+
+        <div class="relative bg-white rounded-3xl p-7 border border-neutral-200/60 shadow-card text-center hover:shadow-soft transition-shadow duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-neutral-100 flex items-center justify-center mx-auto mb-5 ring-4 ring-white relative z-10">
+            <svg class="w-6 h-6 text-neutral-900" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="text-[11px] font-bold text-neutral-900 tracking-widest">PASO 01</span>
+          <h3 class="text-base font-bold text-neutral-900 mt-1.5">Diagnóstico Clínico</h3>
+          <p class="text-xs text-neutral-500 mt-2 leading-relaxed">Evaluación clínica detallada en tu primera visita.</p>
+        </div>
+
+        <div class="relative bg-white rounded-3xl p-7 border border-neutral-200/60 shadow-card text-center hover:shadow-soft transition-shadow duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-neutral-100 flex items-center justify-center mx-auto mb-5 ring-4 ring-white relative z-10">
+            <svg class="w-6 h-6 text-neutral-900" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="text-[11px] font-bold text-neutral-900 tracking-widest">PASO 02</span>
+          <h3 class="text-base font-bold text-neutral-900 mt-1.5">Diseño Estético</h3>
+          <p class="text-xs text-neutral-500 mt-2 leading-relaxed">Visualiza tu sonrisa y plan personalizado antes de iniciar.</p>
+        </div>
+
+        <div class="relative bg-white rounded-3xl p-7 border border-neutral-200/60 shadow-card text-center hover:shadow-soft transition-shadow duration-300">
+          <div class="w-14 h-14 rounded-2xl bg-neutral-100 flex items-center justify-center mx-auto mb-5 ring-4 ring-white relative z-10">
+            <svg class="w-6 h-6 text-neutral-900" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="text-[11px] font-bold text-neutral-900 tracking-widest">PASO 03</span>
+          <h3 class="text-base font-bold text-neutral-900 mt-1.5">Transformación</h3>
+          <p class="text-xs text-neutral-500 mt-2 leading-relaxed">Tratamientos profesionales y resultados duraderos y radiantes.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== TESTIMONIALS ==================== -->
+  <section class="py-16 sm:py-24 bg-white">
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+      
+      <div class="text-center max-w-md mx-auto mb-14">
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-neutral-900 tracking-tight leading-tight">Lo Que Dicen<br class="sm:hidden"> Nuestros Pacientes</h2>
+        <p class="text-neutral-500 text-xs sm:text-sm mt-2">Historias reales, sonrisas reales.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="bg-neutral-50/70 rounded-3xl p-6 border border-neutral-200/60 flex flex-col justify-between">
+          <div>
+            <div class="flex gap-1 mb-4">
+              <span class="text-amber-400 text-sm">★</span><span class="text-amber-400 text-sm">★</span><span class="text-amber-400 text-sm">★</span><span class="text-amber-400 text-sm">★</span><span class="text-amber-400 text-sm">★</span>
+            </div>
+            <p class="text-xs text-neutral-600 leading-relaxed italic">"Nunca pensé que el cambio en mi sonrisa se viera tan armónico y natural. El diseño de sonrisa superó todas mis expectativas."</p>
+          </div>
+          <div class="flex items-center gap-3 mt-6 pt-4 border-t border-neutral-200/60">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="María G." class="w-9 h-9 rounded-full object-cover">
+            <div>
+              <p class="text-xs font-bold text-neutral-900">María G.</p>
+              <p class="text-[11px] text-neutral-400">Diseño de Sonrisa & Carillas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-neutral-50/70 rounded-3xl p-6 border border-neutral-200/60 flex flex-col justify-between">
+          <div>
+            <div class="flex gap-1 mb-4">
+              <span class="text-amber-400 text-sm">★</span><span class="text-amber-400 text-sm">★</span><span class="text-amber-400 text-sm">★</span><span class="text-amber-400 text-sm">★</span><span class="text-amber-400 text-sm">★</span>
+            </div>
+            <p class="text-xs text-neutral-600 leading-relaxed italic">"El diagnóstico digital me permitió ver el resultado final antes de iniciar. El trato de Elijo Odontomar es impecable."</p>
+          </div>
+          <div class="flex items-center gap-3 mt-6 pt-4 border-t border-neutral-200/60">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Carlos R." class="w-9 h-9 rounded-full object-cover">
+            <div>
+              <p class="text-xs font-bold text-neutral-900">Carlos R.</p>
+              <p class="text-[11px] text-neutral-400">Prótesis & Coronas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-neutral-50/70 rounded-3xl p-6 border border-neutral-200/60 flex flex-col justify-between">
+          <div>
+            <div class="flex gap-1 mb-4">
+              <span class="text-amber-400 text-sm">★</span><span class="text-amber-400 text-sm">★</span><span class="text-amber-400 text-sm">★</span><span class="text-amber-400 text-sm">★</span><span class="text-amber-400 text-sm">★</span>
+            </div>
+            <p class="text-xs text-neutral-600 leading-relaxed italic">"Me realicé una limpieza profunda y blanqueamiento dental. La atención fue excelente y mis dientes lucen radiantes."</p>
+          </div>
+          <div class="flex items-center gap-3 mt-6 pt-4 border-t border-neutral-200/60">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80" alt="Ana L." class="w-9 h-9 rounded-full object-cover">
+            <div>
+              <p class="text-xs font-bold text-neutral-900">Ana L.</p>
+              <p class="text-[11px] text-neutral-400">Estética Dental & Blanqueamiento</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ==================== -->
+  <section id="faq" class="py-16 sm:py-24 bg-neutral-50/50">
+    <div class="max-w-2xl mx-auto px-6">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-neutral-900 tracking-tight">
+          Preguntas Frecuentes
+        </h2>
+        <p class="text-neutral-500 text-xs sm:text-sm mt-2">Todo lo que necesitas saber.</p>
+      </div>
+
+      <div class="space-y-3" id="faqAccordion">
+        <div class="bg-white rounded-2xl border border-neutral-200/70 p-4 shadow-sm">
+          <button onclick="toggleFaq(this)" class="w-full text-left flex items-center justify-between font-bold text-xs sm:text-sm text-neutral-900">
+            <span>¿Qué incluye la consulta de valoración?</span>
+            <span class="text-neutral-400 font-normal text-base transition-transform duration-200">+</span>
+          </button>
+          <div class="hidden pt-2.5 text-xs text-neutral-500 leading-relaxed border-t border-neutral-100 mt-2.5">
+            Evaluación clínica completa, diagnóstico detallado y un plan personalizado para tus objetivos de salud y estética.
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-neutral-200/70 p-4 shadow-sm">
+          <button onclick="toggleFaq(this)" class="w-full text-left flex items-center justify-between font-bold text-xs sm:text-sm text-neutral-900">
+            <span>¿Qué tratamientos de estética dental realizan?</span>
+            <span class="text-neutral-400 font-normal text-base transition-transform duration-200">+</span>
+          </button>
+          <div class="hidden pt-2.5 text-xs text-neutral-500 leading-relaxed border-t border-neutral-100 mt-2.5">
+            Diseño de sonrisa con carillas estéticas, blanqueamiento dental, profilaxis y coronas de restauración armónicas.
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-neutral-200/70 p-4 shadow-sm">
+          <button onclick="toggleFaq(this)" class="w-full text-left flex items-center justify-between font-bold text-xs sm:text-sm text-neutral-900">
+            <span>¿Las carillas o el blanqueamiento dañan mis dientes?</span>
+            <span class="text-neutral-400 font-normal text-base transition-transform duration-200">+</span>
+          </button>
+          <div class="hidden pt-2.5 text-xs text-neutral-500 leading-relaxed border-t border-neutral-100 mt-2.5">
+            No. Utilizamos técnicas conservadoras y materiales de alta calidad que protegen y preservan la estructura natural de tus piezas dentales.
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-neutral-200/70 p-4 shadow-sm">
+          <button onclick="toggleFaq(this)" class="w-full text-left flex items-center justify-between font-bold text-xs sm:text-sm text-neutral-900">
+            <span>¿Cómo es la atención durante los tratamientos?</span>
+            <span class="text-neutral-400 font-normal text-base transition-transform duration-200">+</span>
+          </button>
+          <div class="hidden pt-2.5 text-xs text-neutral-500 leading-relaxed border-t border-neutral-100 mt-2.5">
+            En Elijo Odontomar aplicamos técnicas cuidadosas y anestesia local cuando se requiere para que tu experiencia sea completamente tranquila y confortable.
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-neutral-200/70 p-4 shadow-sm">
+          <button onclick="toggleFaq(this)" class="w-full text-left flex items-center justify-between font-bold text-xs sm:text-sm text-neutral-900">
+            <span>¿Qué métodos de pago aceptan?</span>
+            <span class="text-neutral-400 font-normal text-base transition-transform duration-200">+</span>
+          </button>
+          <div class="hidden pt-2.5 text-xs text-neutral-500 leading-relaxed border-t border-neutral-100 mt-2.5">
+            Aceptamos pagos en efectivo, transferencias bancarias y tarjetas para tu comodidad al realizar tus tratamientos.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PUNTO DENTAL BLACK LUXURY FOOTER & CTA ==================== -->
+  <div class="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 pb-10 sm:pb-14 mt-16 sm:mt-20">
+    <footer class="relative bg-neutral-900 text-white rounded-[20px] sm:rounded-[32px] lg:rounded-[44px] border border-neutral-800 shadow-2xl pt-12 sm:pt-16 pb-10 overflow-hidden">
+    
+    <!-- Giant Subtle Watermark -->
+    <div class="absolute -bottom-4 sm:-bottom-8 left-1/2 -translate-x-1/2 pointer-events-none select-none text-[85px] sm:text-[140px] lg:text-[190px] font-black tracking-tight text-white/[0.04] whitespace-nowrap leading-none z-0">
+      Elijo Odontomar
+    </div>
+
+    <div class="relative z-10 max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+      
+      <!-- Top Section: CTA Banner -->
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 pb-12 sm:pb-16 border-b border-white/15 relative">
+        
+        <!-- Decorative Floating Tooth in Footer -->
+        <div class="hidden sm:block absolute -top-5 right-4 lg:right-8 pointer-events-none select-none float-tooth-slow">
+          <img src="tooth.png" alt="Diente decorativo" class="w-12 h-auto drop-shadow-xl opacity-90">
+        </div>
+
+        <div class="max-w-xl">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">
+            ¿Listo para Transformar<br>tu Sonrisa?
+          </h2>
+          <p class="text-white/80 text-xs sm:text-sm mt-3 leading-relaxed max-w-lg">
+            En Elijo Odontomar combinamos salud bucal y odontología estética de vanguardia. Estamos listos para ayudarte a lograr una sonrisa armónica, sana y radiante.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 w-full lg:w-auto">
+          <button onclick="openBookingModal()" class="w-full sm:w-auto text-center bg-white hover:bg-neutral-100 active:scale-95 text-neutral-900 font-extrabold text-xs sm:text-[13px] px-8 py-3.5 rounded-full transition-all shadow-xl">
+            Agendar Cita
+          </button>
+          <a href="#treatments" class="w-full sm:w-auto text-center border border-neutral-700 hover:border-neutral-500 bg-neutral-900/50 hover:bg-neutral-800 active:scale-95 text-white font-medium text-xs sm:text-[13px] px-7 py-3.5 rounded-full transition-all">
+            Ver Tratamientos
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Section: 4-Column Footer -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pt-12 sm:pt-14 pb-12 text-xs">
+        
+        <!-- Col 1: Brand & Socials -->
+        <div>
+          <div class="flex items-center gap-2.5 mb-4">
+            <img src="logo.png" alt="Elijo Odontomar Logo" class="w-9 h-9 object-contain">
+            <div>
+              <span class="text-xl sm:text-2xl font-black text-white tracking-tight block">Elijo <span class="text-[#20cdd4]">Odontomar</span></span>
+              <span class="text-[10px] font-bold text-neutral-900 tracking-wider uppercase block">Odontología Integral | Preventiva</span>
+            </div>
+          </div>
+
+          <!-- Social Media Icons (Circles) -->
+          <div class="flex items-center gap-2.5 mb-6">
+            <a href="#" aria-label="Facebook" class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center transition-colors">
+              <svg class="w-3.5 h-3.5 text-white fill-current" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95C18.05 21.45 22 17.19 22 12z"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter / X" class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center transition-colors">
+              <svg class="w-3 h-3 text-white fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" class="w-8 h-8 rounded-full bg-white/15 hover:bg-white/25 flex items-center justify-center transition-colors">
+              <svg class="w-3.5 h-3.5 text-white fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://wa.me/18096924568?text=Hola%20Elijo%20Odontomar!%20Quisiera%20información%20sobre%20sus%20tratamientos." target="_blank" aria-label="WhatsApp" class="w-8 h-8 rounded-full bg-neutral-1000/30 hover:bg-neutral-1000/40 flex items-center justify-center transition-colors">
+              <svg class="w-3.5 h-3.5 text-white fill-current" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.67 12.05 3.67ZM8.53 7.33C8.37 7.33 8.1 7.39 7.87 7.64C7.65 7.89 7.02 8.48 7.02 9.68C7.02 10.88 7.89 12.04 8.01 12.2C8.13 12.37 9.73 14.83 12.18 15.89C12.77 16.14 13.22 16.29 13.58 16.41C14.16 16.59 14.7 16.57 15.12 16.51C15.59 16.44 16.56 15.92 16.76 15.35C16.97 14.78 16.97 14.29 16.91 14.19C16.85 14.09 16.69 14.03 16.44 13.91C16.19 13.79 14.96 13.18 14.73 13.1C14.5 13.01 14.34 12.97 14.17 13.22C14.01 13.47 13.55 14.01 13.41 14.17C13.27 14.34 13.13 14.36 12.88 14.24C12.64 14.11 11.83 13.85 10.88 13C10.14 12.34 9.64 11.53 9.5 11.28C9.35 11.04 9.48 10.9 9.61 10.78C9.72 10.67 9.86 10.49 9.98 10.35C10.11 10.21 10.15 10.11 10.23 9.94C10.31 9.78 10.27 9.63 10.21 9.51C10.15 9.39 9.69 8.24 9.49 7.78C9.3 7.33 9.11 7.39 8.96 7.38C8.82 7.38 8.68 7.33 8.53 7.33Z"/></svg>
+            </a>
+          </div>
+
+          <p class="text-[11px] text-white/70">
+            © 2026 Elijo Odontomar. Todos los derechos reservados.
+          </p>
+        </div>
+
+        <!-- Col 2: Elijo Odontomar Clinic Links -->
+        <div>
+          <h4 class="font-bold text-white text-sm mb-3.5 tracking-tight">ODONTOMAR</h4>
+          <ul class="space-y-2.5 text-white/75">
+            <li><a href="#hero" class="hover:text-white transition-colors">Nosotros</a></li>
+            <li><a href="#treatments" class="hover:text-white transition-colors">Diseño de Sonrisa</a></li>
+            <li><a href="#treatments" class="hover:text-white transition-colors">Prótesis & Coronas</a></li>
+            <li><button onclick="openBookingModal()" class="hover:text-white transition-colors text-left">Contacto</button></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Contact Info -->
+        <div>
+          <h4 class="font-bold text-white text-sm mb-3.5 tracking-tight">Contacto</h4>
+          <ul class="space-y-2.5 text-white/75">
+            <li><span class="font-bold text-white">Tel:</span> <a href="tel:+18096924568" class="hover:text-white transition-colors">(809) 692-4568</a></li>
+            <li class="leading-relaxed"><span class="font-bold text-white">Dir:</span> Av. 27 de Febrero después C/ México #3, Plaza Maelio, Santo Domingo</li>
+            <li class="pt-1">
+              <span class="font-bold text-white block mb-1">Horario</span>
+              <span class="block text-white/80">Lun–Vie: 8:00 a.m. – 6:00 p.m.</span>
+              <span class="block text-white/80">Sábado: 8:00 a.m. – 1:00 p.m.</span>
+              <span class="block text-white/45">Domingo: Cerrado</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Helpful Links -->
+        <div>
+          <h4 class="font-bold text-white text-sm mb-3.5 tracking-tight">Estética & Salud</h4>
+          <ul class="space-y-2.5 text-white/75">
+            <li><a href="#treatments" class="hover:text-white transition-colors">Carillas Dentales</a></li>
+            <li><a href="#treatments" class="hover:text-white transition-colors">Blanqueamiento Dental</a></li>
+            <li><a href="#results" class="hover:text-white transition-colors">Resultados Antes y Después</a></li>
+            <li><a href="#faq" class="hover:text-white transition-colors">Preguntas Frecuentes</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </footer>
+  </div>
+
+  <!-- ==================== MODAL: BOOKING ==================== -->
+  <div id="bookingModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl w-full max-w-md p-6 sm:p-8 relative shadow-2xl">
+      <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-neutral-400 hover:text-neutral-900 p-2">✕</button>
+
+      <h3 class="text-xl font-bold text-neutral-900">Agendar Consulta Dental</h3>
+      <p class="text-xs text-neutral-500 mt-1">Confirmamos tu cita vía WhatsApp.</p>
+
+      <form onsubmit="handleBookingSubmit(event)" class="mt-5 space-y-3">
+        <div>
+          <label class="block text-[11px] font-bold text-neutral-600 uppercase mb-1">Nombre</label>
+          <input type="text" id="patientName" required placeholder="Tu nombre" class="w-full text-xs rounded-xl border-neutral-200 py-2.5 px-3 focus:ring-neutral-900 focus:border-neutral-900">
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold text-neutral-600 uppercase mb-1">WhatsApp</label>
+          <input type="tel" id="patientPhone" required placeholder="Tu teléfono" class="w-full text-xs rounded-xl border-neutral-200 py-2.5 px-3 focus:ring-neutral-900 focus:border-neutral-900">
+        </div>
+
+        <div>
+          <label class="block text-[11px] font-bold text-neutral-600 uppercase mb-1">Tratamiento</label>
+          <select id="patientService" class="w-full text-xs rounded-xl border-neutral-200 py-2.5 px-3 focus:ring-neutral-900 focus:border-neutral-900">
+            <option>Caries</option>
+            <option>Profilaxis</option>
+            <option>Periodoncia</option>
+            <option>Prótesis</option>
+            <option>Cirugías</option>
+            <option>Carillas</option>
+            <option>Coronas</option>
+            <option>Blanqueamiento</option>
+            <option>Retenedores</option>
+            <option>Quita Hábitos</option>
+          </select>
+        </div>
+
+        <button type="submit" class="w-full bg-neutral-900 hover:bg-black active:scale-95 text-white font-bold text-xs py-3 rounded-xl shadow-glow transition-all mt-4">
+          CONFIRMAR POR WHATSAPP
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <script>
+    // --- SMART HEADER: transparent at top, glass on scroll ---
+    let lastScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const mainHeader = document.getElementById('mainHeader');
+
+    function updateHeader(scrollY) {
+      // At top: fully transparent, no glass, no border
+      if (scrollY <= 60) {
+        mainHeader.classList.remove('header-scrolled', '-translate-y-full');
+      } else {
+        // Scrolled: add glass backdrop + border
+        mainHeader.classList.add('header-scrolled');
+
+        // Hide on scroll down, show on scroll up
+        if (scrollY > lastScrollY && scrollY > 120) {
+          mainHeader.classList.add('-translate-y-full');
+        } else if (scrollY < lastScrollY) {
+          mainHeader.classList.remove('-translate-y-full');
+        }
+      }
+      lastScrollY = Math.max(0, scrollY);
+    }
+
+    // Run once on load
+    updateHeader(window.pageYOffset || document.documentElement.scrollTop);
+
+    window.addEventListener('scroll', () => {
+      updateHeader(window.pageYOffset || document.documentElement.scrollTop);
+    }, { passive: true });
+
+    // Modals
+    function openBookingModal(service = '') {
+      document.getElementById('bookingModal').classList.remove('hidden');
+      if (service) document.getElementById('patientService').value = service;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBookingModal() {
+      document.getElementById('bookingModal').classList.add('hidden');
+      document.body.style.overflow = 'auto';
+    }
+
+    window.onclick = (e) => {
+      if (e.target === document.getElementById('bookingModal')) closeBookingModal();
+    };
+
+    function handleBookingSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('patientName').value.trim();
+      const phone = document.getElementById('patientPhone').value.trim();
+      const service = document.getElementById('patientService').value;
+
+      const clinicPhone = '18096924568';
+      const msg = 🦷 *CONSULTA DENTAL - ELIJO ODONTOMAR*\n\nPaciente: \nTeléfono: \nTratamiento: \n\nEspecialidad: Odontología Integral & Estética Dental;
+      window.open(`https://wa.me/${clinicPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+      closeBookingModal();
+    }
+
+    function toggleFaq(btn) {
+      const content = btn.nextElementSibling;
+      const isOpen = !content.classList.contains('hidden');
+      document.querySelectorAll('#faqAccordion > div > div').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('#faqAccordion button span:last-child').forEach(el => el.textContent = '+');
+      if (!isOpen) {
+        content.classList.remove('hidden');
+        btn.querySelector('span:last-child').textContent = '−';
+      }
+    }
+
+    // ==================== IMAGE COMPARE (.cmp) ====================
+    const cmp = document.getElementById('orthoCompare');
+    const cmpBefore = document.getElementById('cmpBefore');
+    const cmpGrip = document.getElementById('cmpGrip');
+    const cmpPath = document.getElementById('cmpPath');
+    let isCmpHeld = false;
+    let currentPct = 50;
+
+    function renderCmp(pct, bend = 0) {
+      currentPct = Math.max(0, Math.min(100, pct));
+      cmpBefore.style.clipPath = `inset(0 ${100 - currentPct}% 0 0)`;
+      cmpGrip.style.left = `${currentPct}%`;
+
+      const rect = cmp.getBoundingClientRect();
+      const x = (currentPct / 100) * rect.width;
+      const h = rect.height;
+      const bendX = x + (bend * 14);
+      cmpPath.setAttribute('d', `M ${x} 0 Q ${bendX} ${h / 2} ${x} ${h}`);
+      cmp.setAttribute('aria-valuenow', Math.round(currentPct));
+    }
+
+    function handleCmpPointer(e) {
+      const rect = cmp.getBoundingClientRect();
+      const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+      const pct = (x / rect.width) * 100;
+      const bend = Math.max(-1.5, Math.min(1.5, (e.movementX || 0) / 3));
+      renderCmp(pct, isCmpHeld ? bend : 0);
+    }
+
+    cmp.addEventListener('pointerdown', (e) => {
+      isCmpHeld = true;
+      cmp.setAttribute('data-held', '');
+      cmp.setPointerCapture(e.pointerId);
+      handleCmpPointer(e);
+    });
+
+    cmp.addEventListener('pointermove', (e) => {
+      if (!isCmpHeld) return;
+      handleCmpPointer(e);
+    });
+
+    function releaseCmp(e) {
+      if (!isCmpHeld) return;
+      isCmpHeld = false;
+      cmp.removeAttribute('data-held');
+      if (e && e.pointerId && cmp.hasPointerCapture(e.pointerId)) {
+        cmp.releasePointerCapture(e.pointerId);
+      }
+      renderCmp(currentPct, 0);
+    }
+
+    cmp.addEventListener('pointerup', releaseCmp);
+    cmp.addEventListener('pointercancel', releaseCmp);
+
+    cmp.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        renderCmp(currentPct - 5, 0);
+        e.preventDefault();
+      } else if (e.key === 'ArrowRight') {
+        renderCmp(currentPct + 5, 0);
+        e.preventDefault();
+      }
+    });
+
+    window.addEventListener('resize', () => renderCmp(currentPct, 0));
+    window.addEventListener('load', () => renderCmp(50, 0));
+    setTimeout(() => renderCmp(50, 0), 100);
+
+    // ==================== TREATMENTS SLIDER ====================
+    function slideTreatments(dir) {
+      const track = document.getElementById('treatmentsTrack');
+      if (!track) return;
+      const card = track.querySelector('div');
+      const step = card ? (card.offsetWidth + 24) : 380;
+      track.scrollBy({ left: dir * step, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
